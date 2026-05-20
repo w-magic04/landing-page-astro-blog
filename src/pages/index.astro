@@ -1,5 +1,6 @@
 ---
 // ملف: src/pages/index.astro
+// تم تنظيف الكود من جميع أنظمة الاشتراك ونقل العناصر للأسفل
 ---
 
 <html lang="en">
@@ -8,7 +9,7 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Winter Magic</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 	</head>
 	<body>
         <div class="frosted-border"></div>
@@ -16,8 +17,8 @@
 		<div class="landing-container">
             <header>
                 <div class="logo">
-                    <span class="winter">Winter</span>
-                    <span class="magic">Magic</span>
+                    <span class="winter-text">Winter</span>
+                    <span class="magic-text">Magic</span>
                 </div>
                 <nav>
                     <ul>
@@ -29,119 +30,29 @@
             </header>
 
             <main>
-                <div class="content-box">
-                    <h1 class="title">WINTER MAGIC</h1>
+                <div class="top-spacer"></div>
+
+                <div class="bottom-content-area">
                     <h2 class="subtitle">WINTER MAGIC WILL BE HERE SOON.</h2>
                     <p class="description">Take your rewards and wait for us to arrive!</p>
-
-                    <div class="action-wrapper">
-                        <button class="get-now-btn" id="openPopupBtn" type="button">GET NOW</button>
+                    
+                    <div class="button-wrapper">
+                        <a href="https://gift.wintermagic.site" class="get-now-link">GET NOW</a>
                     </div>
                 </div>
-
-                <div class="bottom-spacer"></div> 
             </main>
 		</div>
-
-        <div class="popup-overlay" id="popupOverlay">
-            <div class="popup-card" id="popupCard">
-                <button class="close-btn" id="closePopupBtn">&times;</button>
-                
-                <div id="formContainer">
-                    <h3 class="popup-title">Join The Winter Magic</h3>
-                    <p class="popup-description">Enter your email to unlock your exclusive rewards and get notified the moment we arrive.</p>
-                    
-                    <form class="popup-form" id="ajaxForm" action="https://formspree.io/f/https://formspree.io/f/mjgzygzr" method="POST">
-                        <input type="email" name="email" placeholder="Enter your email address" required />
-                        <button type="submit" id="submitBtn">SUBSCRIBE & ACTIVATE</button>
-                    </form>
-                </div>
-
-                <div id="successMessage" class="hidden">
-                    <div class="success-icon">✨</div>
-                    <h3 class="popup-title">Thank You!</h3>
-                    <p class="popup-description">Your subscription has been successfully activated. Check your email inbox for your exclusive rewards!</p>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            const openBtn = document.getElementById('openPopupBtn');
-            const closeBtn = document.getElementById('closePopupBtn');
-            const overlay = document.getElementById('popupOverlay');
-            const form = document.getElementById('ajaxForm') as HTMLFormElement;
-            const submitBtn = document.getElementById('submitBtn');
-            const formContainer = document.getElementById('formContainer');
-            const successMessage = document.getElementById('successMessage');
-
-            // 1. فتح وإغلاق النافذة المنبثقة
-            openBtn.addEventListener('click', () => {
-                overlay.classList.add('active');
-            });
-
-            closeBtn.addEventListener('click', () => {
-                overlay.classList.remove('active');
-                // إعادة تصفير النافذة بعد الإغلاق إذا كان قد تم الإرسال بنجاح
-                setTimeout(() => {
-                    formContainer.classList.remove('hidden');
-                    successMessage.classList.add('hidden');
-                    form.reset();
-                }, 400);
-            });
-
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    closeBtn.click();
-                }
-            });
-
-            // 2. التحكم بالإرسال الصامت ومنع التحويل الخارجي لصفحة Formspree
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault(); // منع المتصفح من الانتقال الفعلي للصفحة التالية
-                
-                submitBtn.textContent = "SENDING...";
-                submitBtn.setAttribute('disabled', 'true');
-
-                const formData = new FormData(form);
-
-                try {
-                    // إرسال البيانات بشكل صامت خلف الكواليس
-                    const response = await fetch(form.action, {
-                        method: form.method,
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    if (response.ok) {
-                        // إخفاء حقل الإدخال وإظهار رسالة النجاح داخل التصميم مباشرة
-                        formContainer.classList.add('hidden');
-                        successMessage.classList.remove('hidden');
-                    } else {
-                        alert("Oops! There was a problem submitting your form");
-                        submitBtn.textContent = "SUBSCRIBE & ACTIVATE";
-                        submitBtn.removeAttribute('disabled');
-                    }
-                } catch (error) {
-                    alert("Oops! Network error, please try again later.");
-                    submitBtn.textContent = "SUBSCRIBE & ACTIVATE";
-                    submitBtn.removeAttribute('disabled');
-                }
-            });
-        </script>
 	</body>
 </html>
 
 <style>
-    /* الإعدادات العامة للـ CSS */
+    /* الإعدادات الأساسية */
     :root {
-        --gold-light: #e8c37d;
-        --gold-dark: #b68d3a;
+        --gold-bright: #fde2a6;
+        --gold-deep: #b88f34;
         --text-white: #f8f9fa;
         --font-serif: 'Cinzel', serif;
         --font-sans: 'Inter', sans-serif;
-        --font-cursive: 'Great Vibes', cursive;
     }
 
     * {
@@ -151,6 +62,7 @@
     }
 
     body {
+        /* استخدام الصورة المعدلة */
         background-image: url('/santa.jpg.png'); 
         background-size: cover;
         background-position: center;
@@ -158,7 +70,7 @@
         min-height: 100vh;
         font-family: var(--font-sans);
         color: var(--text-white);
-        overflow-x: hidden;
+        overflow: hidden;
         position: relative;
     }
 
@@ -175,18 +87,17 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(10, 23, 46, 0.4) 100%);
+        background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(10, 23, 46, 0.3) 100%);
         padding: 2rem 4rem;
     }
 
+    /* الهيدر العلوي */
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding-top: 0.5rem;
         z-index: 10;
-        margin-bottom: 2rem;
     }
 
     .logo {
@@ -194,21 +105,20 @@
         flex-direction: column;
         align-items: center;
         line-height: 0.7;
+        opacity: 0.9;
     }
 
-    .logo .winter {
+    .logo .winter-text {
         font-family: var(--font-serif);
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }
 
-    .logo .magic {
-        font-family: var(--font-cursive);
-        font-size: 2.4rem;
-        color: var(--gold-light);
-        margin-left: 2.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    .logo .magic-text {
+        font-family: var(--font-serif); /* يمكن استخدام خط cursive إذا فضلت */
+        font-size: 1.5rem;
+        color: var(--gold-bright);
+        margin-left: 2rem;
     }
 
     nav ul {
@@ -220,237 +130,94 @@
     nav a {
         color: var(--text-white);
         text-decoration: none;
-        font-size: 1.05rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
+        font-size: 1rem;
+        transition: 0.3s;
         text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
 
     nav a:hover, nav a.active {
-        color: var(--gold-light);
-        border-bottom: 2px solid var(--gold-light);
-        padding-bottom: 4px;
+        color: var(--gold-bright);
+        border-bottom: 2px solid var(--gold-bright);
     }
 
+    /* توزيع المحتوى ليكون في الأسفل (مكان المستطيل الأحمر) */
     main {
         flex: 1;
         display: flex;
         flex-direction: column;
+        justify-content: flex-end; /* دفع العناصر للأسفل */
         align-items: center;
-        justify-content: flex-start;
+        padding-bottom: 5rem; /* مسافة من أسفل الشاشة لتتطابق مع الصورة */
         text-align: center;
     }
 
-    .content-box {
+    .top-spacer {
+        flex: 1; /* يشغل المساحة العلوية لترك سانتا والشعار يظهرون بوضوح */
+    }
+
+    .bottom-content-area {
+        z-index: 10;
+        width: 100%;
+        max-width: 800px;
+        /* محاكاة مكان المستطيل الأحمر */
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        max-width: 800px;
-        z-index: 10;
-        margin-top: 1rem;
-    }
-
-    .title {
-        font-family: var(--font-serif);
-        font-size: 3.8rem;
-        font-weight: 700;
-        letter-spacing: 4px;
-        background: linear-gradient(to bottom, #ffe8b5, #cfa343);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.9));
-        line-height: 1.1;
+        gap: 0.5rem;
     }
 
     .subtitle {
         font-family: var(--font-serif);
-        font-size: 2.1rem;
+        font-size: 1.8rem;
         font-weight: 500;
-        letter-spacing: 1px;
-        background: linear-gradient(to bottom, #fde2a6, #b88f34);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.9));
-        margin-top: 0.4rem;
-        margin-bottom: 0.6rem;
+        letter-spacing: 1.5px;
+        color: var(--gold-bright);
+        text-shadow: 2px 3px 5px rgba(0, 0, 0, 1);
+        line-height: 1.2;
     }
 
     .description {
-        font-size: 1.3rem;
-        color: #f0f0f0;
-        margin-bottom: 1.5rem;
-        text-shadow: 2px 2px 5px rgba(0,0,0,1);
-    }
-
-    .action-wrapper {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .get-now-btn {
-        background: linear-gradient(to bottom, #ecd093, #b68d3a);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        padding: 0.9rem 3.5rem;
-        border-radius: 50px;
-        font-family: var(--font-sans);
-        font-weight: 700;
         font-size: 1.1rem;
-        letter-spacing: 1px;
-        cursor: pointer;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-        transition: all 0.2s ease;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        color: #e0e0e0;
+        margin-bottom: 1.2rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,1);
     }
 
-    .get-now-btn:hover {
-        transform: translateY(-2px);
-        filter: brightness(1.1);
-        box-shadow: 0 8px 25px rgba(182, 141, 58, 0.4);
+    /* تنسيق الزر الذهبي GET NOW كرابط مباشر */
+    .button-wrapper {
+        margin-top: 0.5rem;
     }
 
-    .bottom-spacer {
-        flex: 1;
-        min-height: 45vh; 
-    }
-
-    /* ================= ستايل النافذة المنبثقة ================= */
-    .popup-overlay {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(6, 15, 30, 0.7);
-        backdrop-filter: blur(8px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 200;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
-
-    .popup-overlay.active {
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .popup-card {
-        background: linear-gradient(135deg, rgba(20, 35, 65, 0.9), rgba(10, 20, 40, 0.95));
-        border: 2px solid rgba(232, 195, 125, 0.3);
-        padding: 3rem 2.5rem;
-        border-radius: 24px;
-        width: 90%;
-        max-width: 480px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-        transform: translateY(-2px);
-    }
-
-    .close-btn {
-        position: absolute;
-        top: 15px; right: 20px;
-        background: none;
-        border: none;
-        color: #fff;
-        font-size: 2rem;
-        cursor: pointer;
-        opacity: 0.6;
-        transition: opacity 0.2s;
-    }
-
-    .close-btn:hover { opacity: 1; color: var(--gold-light); }
-
-    .popup-title {
-        font-family: var(--font-serif);
-        font-size: 1.8rem;
-        color: var(--gold-light);
-        margin-bottom: 1rem;
-        letter-spacing: 1px;
-    }
-
-    .popup-description {
-        font-size: 0.95rem;
-        color: #ccd6f6;
-        line-height: 1.6;
-        margin-bottom: 2rem;
-    }
-
-    .popup-form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        width: 100%;
-    }
-
-    .popup-form input[type="email"] {
-        width: 100%;
-        padding: 1rem;
-        border-radius: 50px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: rgba(255, 255, 255, 0.05);
-        color: white;
-        font-size: 1rem;
-        outline: none;
-        text-align: center;
-        transition: all 0.3s;
-    }
-
-    .popup-form input[type="email"]:focus {
-        border-color: var(--gold-light);
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .popup-form button {
+    .get-now-link {
+        display: inline-block;
         background: linear-gradient(to bottom, #ecd093, #b68d3a);
-        color: white;
-        border: none;
-        padding: 1rem;
+        color: #fff;
+        text-decoration: none;
+        padding: 0.8rem 3rem; /* حجم طبيعي وأنيق */
         border-radius: 50px;
         font-weight: 700;
         font-size: 1rem;
-        cursor: pointer;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        transition: background 0.2s;
+        letter-spacing: 1px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
 
-    .popup-form button:hover:not(:disabled) {
+    .get-now-link:hover {
+        transform: translateY(-3px);
         filter: brightness(1.1);
-    }
-    
-    .popup-form button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
     }
 
-    /* كلاسات التحكم في الإظهار والإخفاء للـ AJAX */
-    .hidden {
-        display: none !important;
-    }
-
-    .success-icon {
-        font-size: 3.5rem;
-        margin-bottom: 1rem;
-        animation: bounce 1s infinite alternate;
-    }
-
-    @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-7px); }
-    }
-
+    /* التجاوب مع الجوال */
     @media (max-width: 768px) {
         .landing-container { padding: 1.5rem; }
-        header { flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
-        .logo .magic { margin-left: 1rem; }
+        header { flex-direction: column; gap: 1rem; }
         nav ul { gap: 1.2rem; }
-        .title { font-size: 2.4rem; letter-spacing: 2px; }
         .subtitle { font-size: 1.3rem; }
-        .description { font-size: 1rem; margin-bottom: 1.2rem; }
-        .get-now-btn { font-size: 0.95rem; padding: 0.8rem 2.5rem; }
-        .bottom-spacer { min-height: 35vh; }
-        .popup-card { padding: 2rem 1.5rem; }
+        .description { font-size: 0.9rem; }
+        main { padding-bottom: 3rem; }
+        .get-now-link { padding: 0.7rem 2rem; font-size: 0.9rem; }
     }
 </style>
