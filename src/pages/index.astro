@@ -1,15 +1,10 @@
----
-// ملف: src/pages/index.astro
-// تم تنظيف الكود من جميع أنظمة الاشتراك ونقل العناصر للأسفل
----
-
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<title>Winter Magic</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;700&display=swap" rel="stylesheet">
 	</head>
 	<body>
         <div class="frosted-border"></div>
@@ -30,10 +25,13 @@
             </header>
 
             <main>
-                <div class="top-spacer"></div>
+                <div class="top-content-area">
+                    <h2 class="subtitle">WINTER MAGIC WILL BE HERE SOON.</h2>
+                </div>
+
+                <div class="middle-spacer"></div>
 
                 <div class="bottom-content-area">
-                    <h2 class="subtitle">WINTER MAGIC WILL BE HERE SOON.</h2>
                     <p class="description">Take your rewards and wait for us to arrive!</p>
                     
                     <div class="button-wrapper">
@@ -62,7 +60,6 @@
     }
 
     body {
-        /* استخدام الصورة المعدلة */
         background-image: url('/santa.jpg.png'); 
         background-size: cover;
         background-position: center;
@@ -87,11 +84,10 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(10, 23, 46, 0.3) 100%);
+        background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(10, 23, 46, 0.2) 100%);
         padding: 2rem 4rem;
     }
 
-    /* الهيدر العلوي */
     header {
         display: flex;
         justify-content: space-between;
@@ -105,7 +101,6 @@
         flex-direction: column;
         align-items: center;
         line-height: 0.7;
-        opacity: 0.9;
     }
 
     .logo .winter-text {
@@ -115,7 +110,7 @@
     }
 
     .logo .magic-text {
-        font-family: var(--font-serif); /* يمكن استخدام خط cursive إذا فضلت */
+        font-family: var(--font-serif);
         font-size: 1.5rem;
         color: var(--gold-bright);
         margin-left: 2rem;
@@ -140,65 +135,77 @@
         border-bottom: 2px solid var(--gold-bright);
     }
 
-    /* توزيع المحتوى ليكون في الأسفل (مكان المستطيل الأحمر) */
+    /* تقسيم الشاشة الرئيسي لتوزيع النصوص */
     main {
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end; /* دفع العناصر للأسفل */
         align-items: center;
-        padding-bottom: 5rem; /* مسافة من أسفل الشاشة لتتطابق مع الصورة */
+        justify-content: space-between; /* يوزع المحتوى بين أعلى وأسفل تلقائياً */
         text-align: center;
+        padding-bottom: 4.5rem; /* رفع المحتوى السفلي قليلاً ليتطابق مع المستطيل */
     }
 
-    .top-spacer {
-        flex: 1; /* يشغل المساحة العلوية لترك سانتا والشعار يظهرون بوضوح */
-    }
-
-    .bottom-content-area {
+    /* 1. ستايل العنوان العلوي (فوق رأس سانتا كلوز) */
+    .top-content-area {
         z-index: 10;
+        margin-top: 1.5rem; /* مسافة خفيفة أسفل الهيدر */
         width: 100%;
-        max-width: 800px;
-        /* محاكاة مكان المستطيل الأحمر */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
+        max-width: 900px;
     }
 
     .subtitle {
         font-family: var(--font-serif);
-        font-size: 1.8rem;
-        font-weight: 500;
-        letter-spacing: 1.5px;
-        color: var(--gold-bright);
-        text-shadow: 2px 3px 5px rgba(0, 0, 0, 1);
+        font-size: 2.3rem; /* تكبير الحجم ليصبح بارزاً */
+        font-weight: 900;  /* خط خشن وعريض جداً */
+        letter-spacing: 2px;
+        /* تدرج ذهبي ملكي ومزخرف */
+        background: linear-gradient(to bottom, #fff3d1, #d4af37, #aa7c11);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        /* إضافة ظل قوي ليفصل الخط عن النجوم والخلفية بوضوح */
+        filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.95)) drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.9));
         line-height: 1.2;
     }
 
+    /* المساحة الفارغة في المنتصف لإظهار سانتا بالكامل */
+    .middle-spacer {
+        flex: 1;
+        min-height: 25vh;
+    }
+
+    /* 2. ستايل المحتوى السفلي (في الجليد) */
+    .bottom-content-area {
+        z-index: 10;
+        width: 100%;
+        max-width: 800px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    /* جعل هذه الكتابة باللون الأسود تماماً وبخط واضح فوق الثلج */
     .description {
-        font-size: 1.1rem;
-        color: #e0e0e0;
-        margin-bottom: 1.2rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,1);
+        font-size: 1.25rem;
+        color: #000000; /* لون أسود خالص */
+        font-weight: 700;  /* زيادة سمك الخط لتسهيل القراءة فوق الثلج */
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.5px;
     }
 
-    /* تنسيق الزر الذهبي GET NOW كرابط مباشر */
-    .button-wrapper {
-        margin-top: 0.5rem;
-    }
-
+    /* تنسيق زر GET NOW الذهبي */
     .get-now-link {
         display: inline-block;
         background: linear-gradient(to bottom, #ecd093, #b68d3a);
         color: #fff;
         text-decoration: none;
-        padding: 0.8rem 3rem; /* حجم طبيعي وأنيق */
+        padding: 0.8rem 3.5rem; /* حجم طبيعي وأنيق وليس عريضاً */
         border-radius: 50px;
         font-weight: 700;
-        font-size: 1rem;
+        font-size: 1.05rem;
         letter-spacing: 1px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         transition: all 0.3s ease;
         border: 1px solid rgba(255, 255, 255, 0.2);
         text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
@@ -207,7 +214,7 @@
     .get-now-link:hover {
         transform: translateY(-3px);
         filter: brightness(1.1);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+        box-shadow: 0 8px 25px rgba(182, 141, 58, 0.5);
     }
 
     /* التجاوب مع الجوال */
@@ -215,9 +222,9 @@
         .landing-container { padding: 1.5rem; }
         header { flex-direction: column; gap: 1rem; }
         nav ul { gap: 1.2rem; }
-        .subtitle { font-size: 1.3rem; }
-        .description { font-size: 0.9rem; }
-        main { padding-bottom: 3rem; }
-        .get-now-link { padding: 0.7rem 2rem; font-size: 0.9rem; }
+        .subtitle { font-size: 1.4rem; font-weight: 700; }
+        .description { font-size: 1rem; color: #111; }
+        main { padding-bottom: 2.5rem; }
+        .get-now-link { padding: 0.7rem 2.2rem; font-size: 0.95rem; }
     }
 </style>
