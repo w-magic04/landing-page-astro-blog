@@ -44,19 +44,24 @@
 		</div>
 
         <div class="popup-overlay" id="popupOverlay">
-            <div class="popup-card">
+            <div class="popup-card" id="popupCard">
                 <button class="close-btn" id="closePopupBtn">&times;</button>
                 
-                <h3 class="popup-title">Join The Winter Magic</h3>
-                <p class="popup-description">Enter your email to unlock your exclusive rewards and get notified the moment we arrive.</p>
+                <div id="formContainer">
+                    <h3 class="popup-title">Join The Winter Magic</h3>
+                    <p class="popup-description">Enter your email to unlock your exclusive rewards and get notified the moment we arrive.</p>
+                    
+                    <form class="popup-form" id="ajaxForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                        <input type="email" name="email" placeholder="Enter your email address" required />
+                        <button type="submit" id="submitBtn">SUBSCRIBE & ACTIVATE</button>
+                    </form>
+                </div>
 
-               <form class="popup-form" action="https://formspree.io/f/mjgzygzr" method="POST">
-    <input type="text" name="_honey" style="display:none">
-    <input type="hidden" name="_next" value="https://wintermagic.site">
-    
-    <input type="email" name="email" placeholder="Enter your email address" required />
-    <button type="submit">SUBSCRIBE & ACTIVATE</button>
-</form>
+                <div id="successMessage" class="hidden">
+                    <div class="success-icon">✨</div>
+                    <h3 class="popup-title">Thank You!</h3>
+                    <p class="popup-description">Your subscription has been successfully activated. Check your email inbox for your exclusive rewards!</p>
+                </div>
             </div>
         </div>
 
@@ -64,21 +69,64 @@
             const openBtn = document.getElementById('openPopupBtn');
             const closeBtn = document.getElementById('closePopupBtn');
             const overlay = document.getElementById('popupOverlay');
+            const form = document.getElementById('ajaxForm') as HTMLFormElement;
+            const submitBtn = document.getElementById('submitBtn');
+            const formContainer = document.getElementById('formContainer');
+            const successMessage = document.getElementById('successMessage');
 
-            // فتح النافذة عند الضغط على الزر الذهبي
+            // 1. فتح وإغلاق النافذة المنبثقة
             openBtn.addEventListener('click', () => {
                 overlay.classList.add('active');
             });
 
-            // إغلاق النافذة عند الضغط على زر X
             closeBtn.addEventListener('click', () => {
                 overlay.classList.remove('active');
+                // إعادة تصفير النافذة بعد الإغلاق إذا كان قد تم الإرسال بنجاح
+                setTimeout(() => {
+                    formContainer.classList.remove('hidden');
+                    successMessage.classList.add('hidden');
+                    form.reset();
+                }, 400);
             });
 
-            // إغلاق النافذة عند الضغط في أي مكان خارج الصندوق المربع
             overlay.addEventListener('click', (e) => {
                 if (e.target === overlay) {
-                    overlay.classList.remove('active');
+                    closeBtn.click();
+                }
+            });
+
+            // 2. التحكم بالإرسال الصامت ومنع التحويل الخارجي لصفحة Formspree
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); // منع المتصفح من الانتقال الفعلي للصفحة التالية
+                
+                submitBtn.textContent = "SENDING...";
+                submitBtn.setAttribute('disabled', 'true');
+
+                const formData = new FormData(form);
+
+                try {
+                    // إرسال البيانات بشكل صامت خلف الكواليس
+                    const response = await fetch(form.action, {
+                        method: form.method,
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // إخفاء حقل الإدخال وإظهار رسالة النجاح داخل التصميم مباشرة
+                        formContainer.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+                    } else {
+                        alert("Oops! There was a problem submitting your form");
+                        submitBtn.textContent = "SUBSCRIBE & ACTIVATE";
+                        submitBtn.removeAttribute('disabled');
+                    }
+                } catch (error) {
+                    alert("Oops! Network error, please try again later.");
+                    submitBtn.textContent = "SUBSCRIBE & ACTIVATE";
+                    submitBtn.removeAttribute('disabled');
                 }
             });
         </script>
@@ -268,12 +316,12 @@
         min-height: 45vh; 
     }
 
-    /* ================= ستايل النافذة المنبثقة (Popup CSS) ================= */
+    /* ================= ستايل النافذة المنبثقة ================= */
     .popup-overlay {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
-        background-color: rgba(6, 15, 30, 0.7); /* خلفية داكنة خفيفة */
-        backdrop-filter: blur(8px); /* تأثير التغبيش الزجاجي الفاخر */
+        background-color: rgba(6, 15, 30, 0.7);
+        backdrop-filter: blur(8px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -283,7 +331,6 @@
         transition: opacity 0.3s ease;
     }
 
-    /* يظهر البوب أب عند إضافة الكلاس active عبر جافاسكريبت */
     .popup-overlay.active {
         opacity: 1;
         pointer-events: auto;
@@ -291,7 +338,7 @@
 
     .popup-card {
         background: linear-gradient(135deg, rgba(20, 35, 65, 0.9), rgba(10, 20, 40, 0.95));
-        border: 2px solid rgba(232, 195, 125, 0.3); /* إطار ذهبي خفيف */
+        border: 2px solid rgba(232, 195, 125, 0.3);
         padding: 3rem 2.5rem;
         border-radius: 24px;
         width: 90%;
@@ -366,12 +413,32 @@
         font-size: 1rem;
         cursor: pointer;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        transition: transform 0.2s;
+        transition: background 0.2s;
     }
 
-    .popup-form button:hover {
-        transform: translateY(-1px);
+    .popup-form button:hover:not(:disabled) {
         filter: brightness(1.1);
+    }
+    
+    .popup-form button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* كلاسات التحكم في الإظهار والإخفاء للـ AJAX */
+    .hidden {
+        display: none !important;
+    }
+
+    .success-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-7px); }
     }
 
     @media (max-width: 768px) {
