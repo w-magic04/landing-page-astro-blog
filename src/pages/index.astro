@@ -1,5 +1,5 @@
 ---
-// هنا يمكنك كتابة أي كود جافاسكريبت للتحكم بالمنطق الخاص بالصفحة (Server-side)
+// ملف: src/pages/index.astro
 ---
 
 <html lang="en">
@@ -7,8 +7,8 @@
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
-		<title>Winter Magic - Coming Soon</title>
-        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet">
+		<title>Winter Magic</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 	</head>
 	<body>
         <div class="frosted-border"></div>
@@ -29,30 +29,25 @@
             </header>
 
             <main>
-                <div class="spacer"></div> 
-
                 <div class="content-box">
                     <h1 class="title">WINTER MAGIC</h1>
                     <h2 class="subtitle">WINTER MAGIC WILL BE HERE SOON.</h2>
                     <p class="description">Take your rewards and wait for us to arrive!</p>
 
-                    <form class="subscribe-form">
-                        <div class="input-wrapper">
-                            <div class="snow-effect"></div>
-                            <input type="email" placeholder="" required />
-                        </div>
-                        <button type="submit">SUBSCRIBE WITH EMAIL - DON'T FORGET TO ACTIVATE YOUR EMAIL</button>
-                    </form>
+                    <div class="action-wrapper">
+                        <button class="get-now-btn" type="button">GET NOW</button>
+                    </div>
                 </div>
+
+                <div class="bottom-spacer"></div> 
             </main>
 		</div>
 	</body>
 </html>
 
 <style>
-    /* الإعدادات العامة */
+    /* الإعدادات العامة للـ CSS */
     :root {
-        --gold: #d4af37;
         --gold-light: #e8c37d;
         --text-white: #f8f9fa;
         --font-serif: 'Cinzel', serif;
@@ -67,8 +62,8 @@
     }
 
     body {
-        /* ضع مسار صورتك هنا */
-        background-image: url('/santa.jpg.png');
+        /* ربط الكود بالخلفية النظيفة */
+        background-image: url('/santa.jpg.png'); 
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -84,8 +79,8 @@
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
         pointer-events: none;
-        border: 15px solid rgba(255, 255, 255, 0.1);
-        box-shadow: inset 0 0 50px rgba(255, 255, 255, 0.2);
+        border: 15px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.15);
         z-index: 100;
     }
 
@@ -93,181 +88,163 @@
         display: flex;
         flex-direction: column;
         min-height: 100vh;
-        background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(12, 28, 56, 0.7) 100%); /* تعتيم الحواف لإبراز النص */
+        background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(10, 23, 46, 0.4) 100%);
         padding: 2rem 4rem;
     }
 
-    /* Header & Nav */
+    /* شريط التنقل العلوي */
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding-top: 1rem;
+        padding-top: 0.5rem;
+        z-index: 10;
+        margin-bottom: 2rem;
     }
 
     .logo {
         display: flex;
         flex-direction: column;
         align-items: center;
-        line-height: 0.8;
+        line-height: 0.7;
     }
 
     .logo .winter {
         font-family: var(--font-serif);
-        font-size: 2rem;
+        font-size: 2.2rem;
         font-weight: 700;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }
 
     .logo .magic {
         font-family: var(--font-cursive);
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         color: var(--gold-light);
-        margin-left: 2rem;
+        margin-left: 2.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
     }
 
     nav ul {
         display: flex;
-        gap: 2rem;
+        gap: 2.5rem;
         list-style: none;
     }
 
     nav a {
         color: var(--text-white);
         text-decoration: none;
-        font-size: 1rem;
-        transition: color 0.3s ease;
+        font-size: 1.05rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
 
     nav a:hover, nav a.active {
         color: var(--gold-light);
-        border-bottom: 1px solid var(--gold-light);
-        padding-bottom: 2px;
+        border-bottom: 2px solid var(--gold-light);
+        padding-bottom: 4px;
     }
 
-    /* Main Content */
+    /* المحتوى الرئيسي وتوزيع المسافات */
     main {
         flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-end; /* لتركيز المحتوى في الأسفل كما في الصورة */
-        padding-bottom: 4rem;
+        justify-content: flex-start; /* دفع المحتوى بالكامل إلى الأعلى */
         text-align: center;
-    }
-
-    .spacer {
-        flex: 1; /* هذه المساحة ستترك مكان لسانتا كلوز ليكون مرئياً من صورة الخلفية */
-        min-height: 40vh;
     }
 
     .content-box {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* ظل قوي للنصوص لجعلها مقروءة فوق الخلفية */
+        width: 100%;
+        max-width: 800px;
+        z-index: 10;
+        margin-top: 1rem; /* مسافة خفيفة تحت الهيدر */
     }
 
+    /* التنسيق الذهبي الفاخر للعناوين */
     .title {
         font-family: var(--font-serif);
-        font-size: 3.5rem;
-        color: var(--gold-light);
-        letter-spacing: 2px;
+        font-size: 3.8rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        background: linear-gradient(to bottom, #ffe8b5, #cfa343);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.9));
+        line-height: 1.1;
     }
 
     .subtitle {
         font-family: var(--font-serif);
-        font-size: 2.2rem;
-        color: var(--gold-light);
+        font-size: 2.1rem;
+        font-weight: 500;
         letter-spacing: 1px;
+        background: linear-gradient(to bottom, #fde2a6, #b88f34);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(2px 3px 5px rgba(0, 0, 0, 0.9));
+        margin-top: 0.4rem;
+        margin-bottom: 0.6rem;
     }
 
     .description {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-        margin-top: 0.5rem;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+        font-size: 1.3rem;
+        color: #f0f0f0;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 5px rgba(0,0,0,1);
+        font-weight: 400;
     }
 
-    /* Form Styles */
-    .subscribe-form {
+    /* تنسيق الزر الذهبي الجديد (حجم عادي وغير ممتد) */
+    .action-wrapper {
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-        width: 100%;
-        max-width: 600px;
+        justify-content: center;
     }
 
-    .input-wrapper {
-        position: relative;
-        width: 100%;
-    }
-
-    /* محاولة لمحاكاة الثلج المتراكم على حقل الإدخال */
-    .snow-effect {
-        position: absolute;
-        top: -10px;
-        left: 5%;
-        width: 90%;
-        height: 20px;
-        background: #fff;
-        border-radius: 50%;
-        filter: blur(2px);
-        opacity: 0.8;
-        pointer-events: none;
-    }
-
-    input[type="email"] {
-        width: 100%;
-        padding: 1rem 2rem;
-        border-radius: 50px;
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        font-size: 1.1rem;
-        outline: none;
-        transition: all 0.3s;
-    }
-
-    input[type="email"]:focus {
-        border-color: var(--gold-light);
-        background-color: #fff;
-    }
-
-    button {
-        background: linear-gradient(to bottom, #e4c580, #c29b4b);
+    .get-now-btn {
+        background: linear-gradient(to bottom, #ecd093, #b68d3a);
         color: white;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        padding: 1rem 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        padding: 0.9rem 3.5rem; /* حجم متناسق وأنيق وليس طويلاً */
         border-radius: 50px;
         font-family: var(--font-sans);
-        font-weight: 500;
-        font-size: 0.9rem;
-        letter-spacing: 0.5px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
         cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s, filter 0.2s;
-        width: 100%;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        transition: all 0.2s ease;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
 
-    button:hover {
+    .get-now-btn:hover {
         transform: translateY(-2px);
         filter: brightness(1.1);
+        box-shadow: 0 8px 25px rgba(182, 141, 58, 0.4);
     }
 
-    /* Media Queries للتجاوب مع الشاشات الصغيرة */
+    /* مساحة سفلية فارغة تترك النصف السفلي من الشاشة لسانتا والقرية */
+    .bottom-spacer {
+        flex: 1;
+        min-height: 45vh; 
+    }
+
+    /* التجاوب مع الهواتف الذكية */
     @media (max-width: 768px) {
-        .landing-container {
-            padding: 1rem;
-        }
-        header {
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .title { font-size: 2.5rem; }
-        .subtitle { font-size: 1.5rem; }
-        nav ul { gap: 1rem; }
+        .landing-container { padding: 1.5rem; }
+        header { flex-direction: column; gap: 1rem; margin-bottom: 1rem; }
+        .logo .magic { margin-left: 1rem; }
+        nav ul { gap: 1.2rem; }
+        .title { font-size: 2.4rem; letter-spacing: 2px; }
+        .subtitle { font-size: 1.3rem; }
+        .description { font-size: 1rem; margin-bottom: 1.2rem; }
+        .get-now-btn { font-size: 0.95rem; padding: 0.8rem 2.5rem; }
+        .bottom-spacer { min-height: 35vh; }
     }
 </style>
